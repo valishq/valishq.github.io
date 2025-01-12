@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valis HQ</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1a1a1a; /* Darker background */
+            overflow: hidden;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(10, auto);
+            grid-template-rows: repeat(10, auto);
+            gap: 5px;
+            width: auto;
+            height: auto;
+        }
+
+        .grid-item {
+            width: 80px; /* Adjust to match the size of the logo */
+            height: 80px; /* Adjust to match the size of the logo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            border-radius: 8px; /* Slightly round borders */
+        }
+
+        .flip-card {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            position: relative;
+            border-radius: 8px; /* Matches the grid item */
+        }
+
+        .flip-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px; /* Ensures both sides are round */
+        }
+
+        .flip-card-front {
+            background: url('valishq_3_bck.webp') no-repeat center center;
+            background-size: cover;
+        }
+
+        .flip-card-back {
+            background-color: #1a1a1a; /* Match the body background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-back img {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px; /* Matches the corners */
+        }
+    </style>
+</head>
+<body>
+    <div class="grid" id="grid"></div>
+
+    <script>
+        const grid = document.getElementById('grid');
+
+        // Create the grid items
+        for (let i = 0; i < 100; i++) {
+            const gridItem = document.createElement('div');
+            gridItem.classList.add('grid-item');
+
+            const flipCard = document.createElement('div');
+            flipCard.classList.add('flip-card');
+
+            const front = document.createElement('div');
+            front.classList.add('flip-card-front');
+
+            const back = document.createElement('div');
+            back.classList.add('flip-card-back');
+
+            const img = document.createElement('img');
+            img.src = 'valishq_3.webp';
+            img.alt = 'Logo';
+            back.appendChild(img);
+
+            flipCard.appendChild(front);
+            flipCard.appendChild(back);
+            gridItem.appendChild(flipCard);
+            grid.appendChild(gridItem);
+        }
+
+        // Randomly flip cards
+        function flipRandomCard() {
+            const cards = document.querySelectorAll('.flip-card');
+            const randomCard = cards[Math.floor(Math.random() * cards.length)];
+
+            if (!randomCard.classList.contains('flipped')) {
+                randomCard.classList.add('flipped');
+
+                setTimeout(() => {
+                    randomCard.classList.remove('flipped');
+                }, Math.random() * 2000 + 1000); // Random time between 1 and 3 seconds
+            }
+        }
+
+        // Continuously flip cards
+        setInterval(flipRandomCard, Math.random() * 2000 + 1000);
+    </script>
+</body>
+</html>
+
