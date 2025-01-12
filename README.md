@@ -1,2 +1,1 @@
-# .github
-Valis HQ
+# Valis HQ
